@@ -6,7 +6,7 @@ A full responsive movie site using TMDB Api. The main target was to build someth
 <li>Updated Movie Api</li>
 <li>Dynamic functionality (like Load more to load movies)</li>
 <li>Firebase Authentication service</li>
-<li>Firehost</li>
+<li>Firehost (for store data)</li>
 <li>React Routing</li>
 <li>Reusable Component</li>
 <li>Fully Responsive</li>
