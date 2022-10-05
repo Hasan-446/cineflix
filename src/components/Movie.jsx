@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import {useNavigate} from 'react-router-dom';
 import { AiFillStar } from 'react-icons/ai';
 import { UserAuth } from "../context/AuthContext";
 import { db } from "../Firebase";
 import { arrayUnion,doc,updateDoc } from "@firebase/firestore"; 
 
 const Movie = (props) => {
+  const navigate= useNavigate();
     const [like, setLike] = useState(false)
     const [saved,setSaved]= useState(false)
     const {user} = UserAuth()
@@ -27,15 +29,21 @@ const Movie = (props) => {
         alert ("please log in to save Movies")
       }
     }
+
+    const handleClick=()=>{
+      navigate(`/${props.genre}/${props.item.id}`)
+    }
   return (
     <div className="w-[180px] sm:w-[250px] md:w-[320px] lg:w-[320px] xl:w-[280px]  inline-block cursor-pointer relative p-4">
       <img
         className="w-full h-auto"
         src={`https://image.tmdb.org/t/p/w500${props.item?.poster_path}`}
         alt=""
+        onClick={handleClick}
       />
-      <div className="absolute top-0 left-0 w-full h-full hover:bg-black/60 opacity-0 hover:opacity-100 text-white">
-        <p className="white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center">
+      <div className="absolute top-0 left-0 w-full h-full hover:bg-black/60 opacity-0 hover:opacity-100 text-white px-5"
+      onClick={handleClick}>
+        <p className="white-space-normal text-xs md:text-sm lg:text-lg font-bold flex justify-center items-center h-full text-center">
           {props.item?.title}
         </p>
         <p onClick={saveShow}>

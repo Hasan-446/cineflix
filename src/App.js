@@ -8,6 +8,7 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import MovieList from "./pages/MovieList";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MovieDetails from "./pages/MovieDetails";
 
 function App() {
   return (
@@ -18,9 +19,8 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/signIn" element={<Login />}></Route>
           <Route path="/signUp" element={<SignUp />}></Route>
-          <Route path="/movie" element={<MovieList />}>
             <Route path=":genre" element={<MovieList />}></Route>
-          </Route>
+            <Route path="/:genre/:movieId" element={<MovieDetails />}></Route>
           <Route
             path="/account"
             element={

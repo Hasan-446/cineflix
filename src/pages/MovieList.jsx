@@ -3,9 +3,11 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import  Movie from "../components/Movie";
 
+
 const MovieList = () => {
   const params = useParams();
   const key = process.env.REACT_APP_IMDB_API_KEY;
+ 
  
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -27,6 +29,7 @@ const MovieList = () => {
         console.log(error);
       });
   };
+
 
   console.log(movies)
 

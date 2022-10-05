@@ -26,7 +26,7 @@ const Row = ({ title, fetchURL,rowID,genre}) => {
     slider.scrollLeft = slider.scrollLeft + 500;
   };
   const handleClick=()=>{
-    navigate(`/movie/${genre}`)
+    navigate(`${genre}`)
   }
 
   return (
@@ -44,7 +44,7 @@ const Row = ({ title, fetchURL,rowID,genre}) => {
         <div id={'slider'+ rowID} className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative '>
           {movies.map((item) => {
             return (
-              <Movie item={item}></Movie>
+              <Movie item={item} genre={genre}></Movie>
             );
           })}
         </div>

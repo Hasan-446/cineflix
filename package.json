@@ -14,6 +14,7 @@
     "react-read-more-read-less": "^1.0.7",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-youtube": "^10.0.0",
     "read-more-react": "^1.0.10",
     "read-smore": "^2.0.4",
     "tailwind-scrollbar-hide": "^1.1.7",
