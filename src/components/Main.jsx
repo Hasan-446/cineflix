@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import requests from "../Requests";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 
-const Main = () => {
+const Main = (props) => {
   const [movies, setMovies] = useState([]);
   const movie = movies[Math.floor(Math.random() * movies.length)];
 
@@ -11,6 +12,8 @@ const Main = () => {
       setMovies(response.data.results);
     });
   }, []);
+
+  const navigate= useNavigate();
 
 
 const ReadMore = (text) => {
@@ -31,6 +34,10 @@ const ReadMore = (text) => {
   )
 }
 
+const handleClick=()=>{
+  navigate(`/${props.genre}/${movie.id}`)
+}
+
 
   return (
     <div className="w-full h-[70vh] md:h-[600px] text-[#FFFDE3]">
@@ -46,7 +53,7 @@ const ReadMore = (text) => {
         <div className="absolute w-full top-[20%] p-4 md:p-16">
           <h1 className="text-2xl md:text-5xl font-bold">{movie?.title} </h1>
           <div className="my-4">
-            <button className=" border bg-gray-300 text-black border-gray-300 py-2 px-5">
+            <button onClick={handleClick} className=" border bg-gray-300 text-black border-gray-300 py-2 px-5" >
               Play
             </button>
             <button className="border text-[#FFFDE3] border-gray-300 py-2 px-5 ml-4 ">

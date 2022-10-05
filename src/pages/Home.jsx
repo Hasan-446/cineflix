@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <div>
-     <Main/>
+     <Main genre="popular"/>
      <Row title="UpComing" fetchURL={requests.requestUpcoming} rowID= '1' genre="upcoming" />
      <Row title="Popular" fetchURL={requests.requestPopular} rowID= '2' genre="popular"/>
      <Row title="Top Rated" fetchURL={requests.requestTopRated} rowID= '3' genre="top_rated"/>

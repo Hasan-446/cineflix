@@ -41,11 +41,11 @@ const Movie = (props) => {
         alt=""
         onClick={handleClick}
       />
-      <div className="absolute top-0 left-0 w-full h-full hover:bg-black/60 opacity-0 hover:opacity-100 text-white px-5"
+      <div className="absolute top-0 left-0 w-full h-full hover:bg-black/60 opacity-0 hover:opacity-100 text-white px-5 "
       onClick={handleClick}>
-        <p className="white-space-normal text-xs md:text-sm lg:text-lg font-bold flex justify-center items-center h-full text-center">
+        <div className="white-space-normal text-xs md:text-sm lg:text-lg font-bold flex justify-center items-center h-full text-center break-words flex-wrap ">
           {props.item?.title}
-        </p>
+        </div>
         <p onClick={saveShow}>
           {like ? (
             <FaHeart className="absolute top-8 left-8 text-gray-300" />
