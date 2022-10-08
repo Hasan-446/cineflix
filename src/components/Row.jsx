@@ -41,7 +41,7 @@ const Row = ({ title, fetchURL,rowID,genre}) => {
           size={30}
           onClick={slideLeft}
         />
-        <div id={'slider'+ rowID} className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative '>
+        <div id={'slider'+ rowID} className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative break-words'>
           {movies.map((item) => {
             return (
               <Movie item={item} genre={genre}></Movie>

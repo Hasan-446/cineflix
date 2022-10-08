@@ -4,6 +4,13 @@ import { useParams } from "react-router-dom";
 import { IoMdPlay } from "react-icons/io";
 import Youtube from "react-youtube";
 import { AiFillStar } from "react-icons/ai";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FiBookmark } from "react-icons/fi";
+import { GiShare } from "react-icons/gi";
+import { UserAuth } from "../context/AuthContext";
+import { db } from "../Firebase";
+import { arrayUnion,doc,updateDoc } from "@firebase/firestore"; 
+
 
 const MovieDetails = () => {
   const params = useParams();
@@ -12,6 +19,11 @@ const MovieDetails = () => {
   const [movieData, setMovieData] = useState([]);
   const [trailer, setTrailer] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [like, setLike] = useState(false)
+    const [saved,setSaved]= useState(false)
+    const {user} = UserAuth()
+
+    const movieID = doc(db, 'users', `${user?.email}`);
   //const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
@@ -34,52 +46,27 @@ const MovieDetails = () => {
         console.log(error);
       });
   };
-  console.log(movieData)
+  console.log(movieData);
+
+  const saveShow = async()=>{
+    if (user?.email){
+      setLike(!like)
+      setSaved(true)
+      await updateDoc(movieID,{
+        savedShows:arrayUnion({
+          id: movieData.id,
+          title: movieData.title,
+          img:movieData.poster_path
+        })
+      })
+    }else{
+      alert ("please log in to save Movies")
+    }
+  }
 
   return (
     <div>
-      <div className="">
-        <div className="absolute w-full h-[70vh] bg-gradient-to-t from-black ">
-          {" "}
-        </div>
-        <img
-          src={`https://image.tmdb.org/t/p/original${
-            movieData.backdrop_path || movieData.poster_path
-          }`}
-          alt=""
-          className="w-full h-[70vh] object-cover"
-        />
-      </div>
-      <div className="flex justify-center ">
-        <div className="flex flex-col items-center md:flex-row md:max-w-2xl lg:max-w-3xl absolute xl:max-w-4xl md:mt-[-300px] mt-[-200px] text-white ">
-          <div className=" lg:w-[30%] h-auto md:h-[400px] w-[70%] ">
-            <img
-              className="w-[100%] h-full md:h-auto object-cover "
-              src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
-              alt=""
-            />
-          </div>
-
-          {/* {playing ? (
-              <>
-                <Youtube
-                  videoId={trailer.key}
-                  className="right-0 left-0"
-                  opts={{
-                    width: "100%",
-                    height: "100%",
-                  }}
-                />
-                <button
-                  onClick={() => setPlaying(false)}
-                  className={"button close-video"}
-                >
-                  Close
-                </button>
-              </>
-                ) : null} */}
-
-          {showModal ? (
+      {showModal ? (
             <>
               <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -116,14 +103,37 @@ const MovieDetails = () => {
             </>
           ) : null}
 
+      <div className="">
+        <div className="absolute w-full h-[70vh] bg-gradient-to-t from-black ">
+          {" "}
+        </div>
+        <img
+          src={`https://image.tmdb.org/t/p/original${
+            movieData.backdrop_path || movieData.poster_path
+          }`}
+          alt=""
+          className="w-full h-[70vh] object-cover"
+        />
+      </div>
+      <div className="flex justify-center ">
+        <div className="flex flex-col items-center md:flex-row md:max-w-2xl lg:max-w-3xl absolute xl:max-w-4xl md:mt-[-300px] mt-[-200px] text-white ">
+          <div className=" lg:w-[30%] h-auto md:h-[400px] w-[70%] ">
+            <img
+              className="w-[100%] h-full md:h-auto object-cover rounded-md"
+              src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
+              alt=""
+            />
+          </div>
           <div className="float-left w-[70%] md:pl-12 ">
             <p className="text-3xl md:text-5xl mb-3 mt-3 md:mt-0">
               {movieData.title || movieData.original_title}{" "}
             </p>
             <div className="flex flex-row items-center ">
               <div className="flex flex-row justify-center items-center mr-5 pb-2">
-              <AiFillStar className="text-3xl mr-2"/>
-                <p className="text-4xl ">{movieData?.vote_average?.toFixed(1)} </p>
+                <AiFillStar className="text-3xl mr-2" />
+                <p className="text-4xl ">
+                  {movieData?.vote_average?.toFixed(1)}{" "}
+                </p>
               </div>
               <div className="flex flex-col">
                 <div className="grid grid-flow-col auto-cols-max gap-4 ">
@@ -147,13 +157,29 @@ const MovieDetails = () => {
             </div>
 
             <p className="text-gray-300 mb-8">{movieData.overview} </p>
-            <button
-              onClick={() => setShowModal(true)}
-              className="border text-[#FFFDE3] border-gray-300 py-2 px-5 flex flex-row items-center hover:bg-cyan-600 hover:border-cyan-600 mb-8 md:mb-0"
-            >
-              <IoMdPlay className="mr-3" />
-              Watch Trailer
-            </button>
+            <div className="flex flex-row items-center ">
+              <button
+                onClick={() => setShowModal(true)}
+                className="border text-[#FFFDE3] text-base border-gray-300 py-2 px-5 flex flex-row items-center hover:bg-cyan-600 hover:border-cyan-600 mb-8 md:mb-0"
+              >
+                <IoMdPlay className="mr-3" />
+                Watch Trailer
+              </button>
+
+              <p onClick={saveShow} className=" cursor-pointer">
+                {like ? (
+                  <FaHeart className="text-gray-300 text-2xl ml-6 mb-8 md:mb-0" />
+                ) : (
+                  <FaRegHeart className="text-gray-300 text-2xl ml-6 mb-8 md:mb-0" />
+                )}
+              </p>
+              <p>
+                <GiShare className="text-gray-300 text-2xl ml-3 mb-8 md:mb-0" />
+              </p>
+              <p>
+                <FiBookmark className="text-gray-300 text-2xl ml-3 mb-8 md:mb-0" />
+              </p>
+            </div>
           </div>
           <div></div>
         </div>
