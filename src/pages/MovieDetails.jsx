@@ -20,8 +20,8 @@ const MovieDetails = () => {
   const [trailer, setTrailer] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [like, setLike] = useState(false)
-    const [saved,setSaved]= useState(false)
-    const {user} = UserAuth()
+  const [saved,setSaved]= useState(false)
+  const {user} = UserAuth()
 
     const movieID = doc(db, 'users', `${user?.email}`);
   //const [playing, setPlaying] = useState(false);
@@ -65,7 +65,7 @@ const MovieDetails = () => {
   }
 
   return (
-    <div>
+    <div className=" h-[90vh]"> 
       {showModal ? (
             <>
               <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -112,7 +112,7 @@ const MovieDetails = () => {
             movieData.backdrop_path || movieData.poster_path
           }`}
           alt=""
-          className="w-full h-[70vh] object-cover"
+          className="w-full h-[70vh] object-cover "
         />
       </div>
       <div className="flex justify-center ">

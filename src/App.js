@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import MovieList from "./pages/MovieList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MovieDetails from "./pages/MovieDetails";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             }
           ></Route>
         </Routes>
+        <Footer/>
       </AuthContextProvider>
     </div>
   );
